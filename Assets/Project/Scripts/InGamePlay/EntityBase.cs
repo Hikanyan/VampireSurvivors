@@ -17,8 +17,8 @@ abstract public class EntityBase : MonoBehaviour
     {
         CustomUpdate();
     }
-    
+    //継承先で絶対にStartとUpdateを使わせる。
     protected abstract void CustomStart();
     protected abstract void CustomUpdate();
-
+    
 }
