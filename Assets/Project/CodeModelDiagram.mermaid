@@ -1,0 +1,21 @@
+graph TD
+    Player[プレイヤー]
+    Enemy[敵]
+    Skill[スキル]
+    Item[アイテム]
+    Achievements[実績]
+    ExperiencePoint[経験値]
+    LevelUp[レベルアップ]
+
+    Player -->|Attack|Enemy
+    Player -->|Active|Skill
+    Player -->|Use|Item
+    Player -->|Complete|Achievements
+    Enemy -->|Defend|Player
+    Enemy -->|Attack|Player
+    Skill -->|Learn|Player
+    Item -->|Find|Player
+    Achievements -->|Unlock|Player
+    ExperiencePoint -->|Gain|Player
+    Player -->|Gain|ExperiencePoint
+    ExperiencePoint -->|Level Up|LevelUp
