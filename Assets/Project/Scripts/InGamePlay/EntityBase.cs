@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 /// <summary>
@@ -8,14 +9,9 @@ using UnityEngine;
 /// </summary>
 public abstract class EntityBase : MonoBehaviour
 {
-    [SerializeField] private int healthPoint;
-    [SerializeField] private string name;
+    public IntReactiveProperty healthPoint = new IntReactiveProperty();
     
-    //インスペクタから初期化できるようにするためラムダ式は使用しない。
-    public int HealthPoint { get { return healthPoint; } set { healthPoint = value; } }
-    
-    
-    
+    public int attackPower = 0;
     public void Start()
     {
         CustomStart();
@@ -27,20 +23,32 @@ public abstract class EntityBase : MonoBehaviour
     //継承先で絶対にStartとUpdateを使わせる。
     protected abstract void CustomStart();
     protected abstract void CustomUpdate();
-    
-    public void Attack(EntityBase target)
+
+    public virtual void Attack(EntityBase target)
     {
-        // 攻撃の実装
+        int damage = this.attackPower; // 攻撃者の攻撃力
+        target.TakeDamage(damage);
     }
 
-    public void TakeDamage(int damage)
+    /// <summary>
+    /// エンティティがダメージを受けた時の処理
+    /// </summary>
+    /// <param name="damageAmount"></param>
+    public virtual void TakeDamage(int damageAmount)
     {
-        // ダメージを受ける処理
+        healthPoint.Value -= damageAmount;
+        if (healthPoint.Value <= 0)
+        {
+            Die();
+        }
     }
-
-    public bool IsAlive()
+    /// <summary>
+    ///  エンティティが死亡した時の処理
+    /// </summary>
+    protected virtual void Die()
     {
-        // 生存しているかどうかを判定
-        return healthPoint > 0;
+        // 死亡時の処理をここに追加
+        // 例: エンティティの破壊、アニメーション再生、ポイント加算など
+        Destroy(gameObject);
     }
 }

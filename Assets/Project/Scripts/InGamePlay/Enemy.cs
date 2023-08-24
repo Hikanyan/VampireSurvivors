@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class Enemy:EnemyBase
 {
-    protected override void OnStart()
+    protected override void DropItem()
     {
-        
-    }
-
-    protected override void OnUpdate()
-    {
-        
+        // アイテムをドロップする処理
     }
 }
