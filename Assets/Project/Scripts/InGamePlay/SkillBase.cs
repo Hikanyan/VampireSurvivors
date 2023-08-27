@@ -3,19 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine;
+
 /// <summary>
 ///Playerのスキルのベース
 /// </summary>
-public class SkillBase
+public abstract class SkillBase
 {
-    protected Player Player;
-    protected string Name;
-    protected int Damage;
+    [SerializeField] private string _name;
+    [SerializeField] private int _attackDamage;
+    [SerializeField] private Sprite _attackImage;
+    [SerializeField] private AudioClip _audioClip;
 
-    public async  UniTask Activate(EntityBase target)
+    public string Name
     {
-        // スキルを発動する処理
-        await UniTask.Delay(TimeSpan.FromSeconds(2));
-        target.TakeDamage(Damage);
+        get => _name;
+        set => _name = value;
     }
+
+    public int AttackDamage
+    {
+        get => _attackDamage;
+        set => _attackDamage = value;
+    }
+    public Sprite AttackImage
+    {
+        get => _attackImage;
+        set => _attackImage = value;
+    }
+    public AudioClip AudioClip
+    {
+        get => _audioClip;
+        set => _audioClip = value;
+    }
+
+    public abstract void Execute();
 }

@@ -10,7 +10,7 @@ using UnityEngine;
 public abstract class EntityBase : MonoBehaviour
 {
     public IntReactiveProperty healthPoint = new IntReactiveProperty();
-    
+
     public int attackPower = 0;
     public void Start()
     {
