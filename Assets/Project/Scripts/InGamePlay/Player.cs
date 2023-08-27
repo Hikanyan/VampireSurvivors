@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UniRx;
+using UnityEngine.InputSystem;
 
 public class Player : EntityBase
 {
@@ -27,6 +28,12 @@ public class Player : EntityBase
     protected override void CustomUpdate()
     {
     }
+
+    void MovePlayer()
+    {
+        
+    }
+    
     public async UniTask LevelUp()
     {
         // レベルアップ処理

@@ -1,28 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public class ObjectPool : MonoBehaviour
 {
-    public GameObject prefab;
-    public int poolSize = 10;
+    [SerializeField] GameObject _prefab;
+    [SerializeField]int poolSize = 10;
 
-    private List<GameObject> pool;
+    private List<GameObject> _pool;
 
     void Start()
     {
-        pool = new List<GameObject>();
+        _pool = new List<GameObject>();
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject obj = Instantiate(prefab);
+            GameObject obj = Instantiate(_prefab);
             obj.SetActive(false);
-            pool.Add(obj);
+            _pool.Add(obj);
         }
     }
 
     public GameObject GetObject()
     {
-        foreach (GameObject obj in pool)
+        foreach (GameObject obj in _pool)
         {
             if (!obj.activeInHierarchy)
             {
