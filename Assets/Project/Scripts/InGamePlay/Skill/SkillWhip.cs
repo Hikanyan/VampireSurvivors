@@ -10,9 +10,9 @@ public class SkillWhip : SkillBase
 {
     public async override UniTask Execute(Transform playerTransform)
     {
-        Debug.Log($"Executing {Name} skill");
+        Debug.Log($"Executing {name} skill");
 
-        var attack = Instantiate(AttackImage, playerTransform.position, Quaternion.identity);
+        var attack = Instantiate(AttackObject, playerTransform.position, Quaternion.identity);
         await SurvivalTime();
         Destroy(attack);
     }

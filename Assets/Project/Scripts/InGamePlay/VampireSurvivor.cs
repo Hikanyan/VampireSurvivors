@@ -5,7 +5,7 @@ using UniRx.Triggers;
 
 public class VampireSurvivor : AbstractSingleton<VampireSurvivor>
 {
-    private ObjectPool _enemyPool;
+    private EnemyPool _enemyPool;
     public Player player;
     public SkillBase _SkillBase;
     public float spawnDistance = 3.0f; // プレイヤーからの距離
@@ -14,8 +14,7 @@ public class VampireSurvivor : AbstractSingleton<VampireSurvivor>
 
     void OnAwake()
     {
-        _enemyPool = GetComponent<ObjectPool>();
-        _damageController = new DamageController();
+        _damageController = new DamageController(player, _SkillBase);
     }
     void Start()
     {

@@ -12,40 +12,13 @@ public abstract class SkillBase : ScriptableObject
     [SerializeField] int attackDamage;
     [SerializeField] float interval;
     [SerializeField] float survivalTime;
-    [SerializeField] GameObject attackImage;
+    [SerializeField] GameObject attackObject;
     [SerializeField] AudioClip audioClip;
-
-    private Player _player;
     
-    
-    public string Name
+    public GameObject AttackObject
     {
-        get => name;
-        set => name = value;
-    }
-
-    public int AttackDamage
-    {
-        get => attackDamage;
-        set => attackDamage = value;
-    }
-
-    public float Interval
-    {
-        get => interval;
-        set => interval = value;
-    }
-
-    public GameObject AttackImage
-    {
-        get => attackImage;
-        set => attackImage = value;
-    }
-
-    public AudioClip AudioClip
-    {
-        get => audioClip;
-        set => audioClip = value;
+        get => attackObject;
+        set => attackObject = value;
     }
 
     public async UniTask IntervalDelay()
