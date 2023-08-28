@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyBase : EntityBase
+public class Enemy:EnemyBase
 {
-    public ItemBase dropItem;
-    
-    protected abstract void DropItem();
 
     protected override void CustomStart()
     {
@@ -15,8 +12,6 @@ public abstract class EnemyBase : EntityBase
 
     protected override void CustomUpdate()
     {
+        
     }
-
-
-
 }
