@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -10,6 +11,7 @@ public abstract class SkillBase : ScriptableObject
     [SerializeField] string name;
     [SerializeField] int attackDamage;
     [SerializeField] float interval;
+    [SerializeField] float survivalTime;
     [SerializeField] GameObject attackImage;
     [SerializeField] AudioClip audioClip;
 
@@ -50,5 +52,11 @@ public abstract class SkillBase : ScriptableObject
     {
         await UniTask.Delay(TimeSpan.FromSeconds(interval));
     }
-    public abstract void Execute();
+
+    public async UniTask SurvivalTime()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(survivalTime));
+    }
+    
+    public abstract UniTask Execute(Transform playerTransform);
 }

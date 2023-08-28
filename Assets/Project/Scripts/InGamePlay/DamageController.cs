@@ -15,10 +15,5 @@ public class DamageController
     {
         _enemy.TakeDamage(damage);
     }
-
-    public void ExecuteSkill()
-    {
-        _skill.Execute();
-    }
     
 }

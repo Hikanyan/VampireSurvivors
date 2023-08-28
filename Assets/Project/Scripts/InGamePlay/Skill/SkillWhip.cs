@@ -8,11 +8,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSkillWhip", menuName = "Skills/New SkillWhip", order = 1)]
 public class SkillWhip : SkillBase
 {
-    public override void Execute()
+    public async override UniTask Execute(Transform playerTransform)
     {
         Debug.Log($"Executing {Name} skill");
 
-        Instantiate(AttackImage);
-
+        var attack = Instantiate(AttackImage, playerTransform.position, Quaternion.identity);
+        await SurvivalTime();
+        Destroy(attack);
     }
 }

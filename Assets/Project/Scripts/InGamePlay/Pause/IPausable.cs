@@ -1,7 +1,4 @@
-﻿namespace Project.Scripts.InGamePlay.Pause
+﻿public interface IPausable
 {
-    public class IPausable
-    {
-        
-    }
+    void Pause(bool isPause);
 }
