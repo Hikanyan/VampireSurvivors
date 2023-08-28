@@ -28,6 +28,7 @@ public class Player : EntityBase
         if (collision.gameObject.CompareTag("Experience"))
         {
             experience.Value++;
+            Debug.Log($"{experience.Value}");
         }
     }
 
@@ -78,7 +79,7 @@ public class Player : EntityBase
         foreach (var skill in skillList)
         {
             await skill.IntervalDelay();
-            skill.Execute(); // スキルを実行
+            await skill.Execute(transform); // スキルを実行
         }
         isExecutingSkills = false;
     }
@@ -89,7 +90,7 @@ public class Player : EntityBase
     public async UniTask ExperienceUp()
     {
         experience.Value++;
-        if (experience.Value == 10)
+        if (experience.Value >= 10)
         {
             await LevelUp();
         }
@@ -104,7 +105,4 @@ public class Player : EntityBase
         level.Value++;
         await UniTask.Yield();
     }
-    
-    
-    
 }
