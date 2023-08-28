@@ -10,17 +10,26 @@ public class Player : EntityBase
 {
     public IntReactiveProperty level = new IntReactiveProperty();
     public IntReactiveProperty experience = new IntReactiveProperty();
-    public ReactiveCollection<SkillBase> skills = new ReactiveCollection<SkillBase>();
+    public List<SkillBase> skillList = new List<SkillBase>();
 
     private PlayerInput _playerInput;
     private Vector2 _moveValue;
     [SerializeField] private float _moveSpeed = 5f;
+    bool isExecutingSkills = false;
 
     private void Awake()
     {
         TryGetComponent<PlayerInput>(out _playerInput);
     }
 
+
+    protected override void HandleCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Experience"))
+        {
+            experience.Value++;
+        }
+    }
 
     protected override void CustomStart()
     {
@@ -31,18 +40,28 @@ public class Player : EntityBase
     protected override void CustomUpdate()
     {
         MovePlayer();
+        if (!isExecutingSkills) ExecuteSkills();
     }
 
+    /// <summary>
+    /// InputSystem用
+    /// </summary>
     private void OnEnable()
     {
         _playerInput.actions.Enable();
-    } //InputSystem用
+    } 
 
+    /// <summary>
+    /// InputSystem用
+    /// </summary>
     private void OnDisable()
     {
         _playerInput.actions.Disable();
-    } //InputSystem用
+    }
 
+    /// <summary>
+    /// Playerの移動
+    /// </summary>
     void MovePlayer()
     {
         _moveValue = _playerInput.actions["Move"].ReadValue<Vector2>();
@@ -50,18 +69,42 @@ public class Player : EntityBase
         transform.Translate(moveDirection * (_moveSpeed * Time.deltaTime));
     }
 
-    void ExecuteSkills()
+    /// <summary>
+    /// Skillの実行
+    /// </summary>
+    async UniTask ExecuteSkills()
     {
-        foreach (var skill in skills)
+        isExecutingSkills = true;
+        foreach (var skill in skillList)
         {
-            skill.Execute();
+            await skill.IntervalDelay();
+            skill.Execute(); // スキルを実行
+        }
+        isExecutingSkills = false;
+    }
+
+    /// <summary>
+    /// 経験値が一定ラインを超えたらレベルアップ
+    /// </summary>
+    public async UniTask ExperienceUp()
+    {
+        experience.Value++;
+        if (experience.Value == 10)
+        {
+            await LevelUp();
         }
     }
 
+    /// <summary>
+    /// レベルアップ
+    /// </summary>
     public async UniTask LevelUp()
     {
         // レベルアップ処理
         level.Value++;
         await UniTask.Yield();
     }
+    
+    
+    
 }

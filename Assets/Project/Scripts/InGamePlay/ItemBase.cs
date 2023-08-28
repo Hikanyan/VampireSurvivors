@@ -8,7 +8,12 @@ public class ItemBase : EntityBase
 {
     public string name;
     public int effect;
-    
+
+    protected override void HandleCollisionEnter2D(Collision2D collision)
+    {
+        throw new System.NotImplementedException();
+    }
+
     protected override void CustomStart()
     {
         throw new System.NotImplementedException();

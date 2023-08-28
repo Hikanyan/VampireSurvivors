@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 /// <summary>
@@ -11,25 +12,34 @@ public abstract class EntityBase : MonoBehaviour
 {
     public IntReactiveProperty healthPoint = new IntReactiveProperty();
 
-    public int attackPower = 0;
+    
     public void Start()
     {
+        // OnCollisionEnter2D を監視
+        this.OnCollisionEnter2DAsObservable()
+            .Subscribe(collision =>
+            {
+                // HandleCollisionEnter2D メソッドを呼び出し、特定の処理を実行
+                HandleCollisionEnter2D(collision);
+            })
+            .AddTo(this); // オブジェクトが破棄されたらサブスクリプションも破棄
+        
         CustomStart();
     }
     public void Update()
     {
         CustomUpdate();
     }
-    //継承先で絶対にStartとUpdateを使わせる。
     protected abstract void CustomStart();
     protected abstract void CustomUpdate();
+    /// <summary>
+    /// OnCollisionEnter2DAsObservableで監視しています。
+    /// 自分に当たったときに処理したい内容の記述をしてください。
+    /// </summary>
+    /// <param name="collision"></param>
+    protected abstract void HandleCollisionEnter2D(Collision2D collision);
 
-    public virtual void Attack(EntityBase target)
-    {
-        int damage = this.attackPower; // 攻撃者の攻撃力
-        target.TakeDamage(damage);
-    }
-
+    
     /// <summary>
     /// エンティティがダメージを受けた時の処理
     /// </summary>
