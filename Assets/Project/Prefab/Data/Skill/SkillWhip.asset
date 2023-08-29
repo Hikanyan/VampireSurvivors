@@ -16,5 +16,5 @@ MonoBehaviour:
   attackDamage: 10
   interval: 2
   survivalTime: 1
-  attackImage: {fileID: 2358683563726944482, guid: 93b245cde39b1654fa7341e26c1e973c, type: 3}
+  attackObject: {fileID: 2358683563726944482, guid: 93b245cde39b1654fa7341e26c1e973c, type: 3}
   audioClip: {fileID: 0}
